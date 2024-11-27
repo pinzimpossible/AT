@@ -1,6 +1,7 @@
 package page;
 
 import base.BasePage;
+import base.readENV;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
@@ -13,10 +14,13 @@ public class loginPage extends BasePage {
     private final By passwordField = By.id("password");
 
     public void openLoginPage() {
-        driver.get(getEnvironmentUrl());
+        driver.get(readENV.get("env"));
     }
 
-    public void login(String email, String password) {
+    public void login() {
+
+        String email = readENV.get("email");
+        String password = readENV.get("password");
 
         wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
 
