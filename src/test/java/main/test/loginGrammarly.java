@@ -14,7 +14,7 @@ public class loginGrammarly {
 
             lP.openLoginPage();
 
-            lP.login("binhminh9631@gmail.com", "Binhminh294.");
+            lP.login();
 
             System.out.println("Login executed successfully!");
 
