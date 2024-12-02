@@ -7,18 +7,23 @@ import java.util.Properties;
 public class readENV {
     private static Properties properties;
 
-    static {
+    public static void loadProperties(String environment) {
         try {
-            FileInputStream fileInputStream = new FileInputStream("src/test/java/env/env.properties");
+            String filePath = "src/main/resources/env_" + environment + "_config.properties";
+            System.out.println(filePath);
+            FileInputStream fileInputStream = new FileInputStream(filePath);
             properties = new Properties();
             properties.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to load env.properties file!");
+            throw new RuntimeException("Failed to load "+ environment +" file!");
         }
     }
 
     public static String get(String key) {
+        if (properties == null) {
+            throw new RuntimeException("Fail to load properties");
+        }
         return properties.getProperty(key);
     }
 }

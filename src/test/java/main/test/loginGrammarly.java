@@ -1,18 +1,22 @@
 package main.test;
 
 import base.BasePage;
+import base.readENV;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import page.loginPage;
 
 public class loginGrammarly {
+
+    @BeforeSuite
+    private void LoadEnv(String[] args) {
+        readENV.loadProperties("STG");
+    }
     @Test
     public static void main(String[] args) {
         BasePage.initializeDriver();
-
         try {
             loginPage lP = new loginPage();
-
-            lP.openLoginPage();
 
             lP.login();
 

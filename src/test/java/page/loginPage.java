@@ -3,7 +3,6 @@ package page;
 import base.BasePage;
 import base.readENV;
 import org.openqa.selenium.By;
-import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
 public class loginPage extends BasePage {
@@ -12,10 +11,6 @@ public class loginPage extends BasePage {
     private final By emailField = By.id("email");
     private final By loginContinue = By.xpath("//button[@type='submit']");
     private final By passwordField = By.id("password");
-
-    public void openLoginPage() {
-        driver.get(readENV.get("env"));
-    }
 
     public void login() {
 

@@ -20,4 +20,6 @@ public class BasePage {
     public static void tearDownDriver() {
         driver.quit();
     }
+
 }
+
