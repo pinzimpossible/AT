@@ -9,11 +9,11 @@ import page.loginPage;
 public class loginGrammarly {
 
     @BeforeSuite
-    private void LoadEnv(String[] args) {
+    private void LoadEnv() {
         readENV.loadProperties("STG");
     }
     @Test
-    public static void main(String[] args) {
+    public static void executeLoginTest() {
         BasePage.initializeDriver();
         try {
             loginPage lP = new loginPage();

@@ -9,8 +9,7 @@ public class readENV {
 
     public static void loadProperties(String environment) {
         try {
-            String filePath = "src/main/resources/env_" + environment + "_config.properties";
-            System.out.println(filePath);
+            String filePath = "src/test/java/env/env_" + environment + "_config.properties";
             FileInputStream fileInputStream = new FileInputStream(filePath);
             properties = new Properties();
             properties.load(fileInputStream);
