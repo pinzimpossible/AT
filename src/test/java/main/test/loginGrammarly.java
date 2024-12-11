@@ -1,20 +1,24 @@
 package main.test;
 
 import base.BasePage;
+import base.readENV;
+import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
 import page.loginPage;
 
 public class loginGrammarly {
-    @Test
-    public static void main(String[] args) {
-        BasePage.initializeDriver();
 
+    @BeforeSuite
+    private void LoadEnv() {
+        readENV.loadProperties("STG");
+    }
+    @Test
+    public static void executeLoginTest() {
+        BasePage.initializeDriver();
         try {
             loginPage lP = new loginPage();
 
-            lP.openLoginPage();
-
-            lP.login("binhminh9631@gmail.com", "Binhminh294.");
+            lP.login();
 
             System.out.println("Login executed successfully!");
 

@@ -10,8 +10,6 @@ public class BasePage {
     public static WebDriver driver;
     public static WebDriverWait wait;
 
-    String env = "https://www.grammarly.com";
-
     public static void initializeDriver() {
         System.setProperty("webdriver.chrome.driver", "src/main/resources/chromedriver.exe");
         driver = new ChromeDriver();
@@ -23,7 +21,5 @@ public class BasePage {
         driver.quit();
     }
 
-    public String getEnvironmentUrl() {
-        return env;
-    }
 }
+
