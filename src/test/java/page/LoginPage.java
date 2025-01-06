@@ -1,11 +1,11 @@
 package page;
 
 import base.BasePage;
-import base.readENV;
+import base.ReadEnv;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class loginPage extends BasePage {
+public class LoginPage extends BasePage {
 
     private final By loginButton = By.xpath("//a[text()='Log in']");
     private final By emailField = By.id("email");
@@ -14,8 +14,8 @@ public class loginPage extends BasePage {
 
     public void login() {
 
-        String email = readENV.get("email");
-        String password = readENV.get("password");
+        String email = ReadEnv.get("email");
+        String password = ReadEnv.get("password");
 
         wait.until(ExpectedConditions.elementToBeClickable(loginButton)).click();
 

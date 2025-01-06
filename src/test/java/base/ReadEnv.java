@@ -4,9 +4,10 @@ import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Properties;
 
-public class readENV {
+public class ReadEnv {
     private static Properties properties;
 
+    //Load environment file
     public static void loadProperties(String environment) {
         try {
             String filePath = "src/test/java/env/env_" + environment + "_config.properties";
@@ -15,7 +16,7 @@ public class readENV {
             properties.load(fileInputStream);
         } catch (IOException e) {
             e.printStackTrace();
-            throw new RuntimeException("Failed to load "+ environment +" file!");
+            throw new RuntimeException("Failed to load " + environment + " file!");
         }
     }
 

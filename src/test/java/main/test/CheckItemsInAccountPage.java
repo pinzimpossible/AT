@@ -1,79 +1,148 @@
 package main.test;
 
 import base.BasePage;
-import base.readENV;
+import base.ReadEnv;
+
+import page.AccountPage;
+import page.ProfilePage;
+import page.SubscriptionPage;
+import page.WritingPage;
+import page.FeaturePage;
+
+import org.openqa.selenium.TakesScreenshot;
 import org.testng.Assert;
-import page.accountPage;
-import page.profilePage;
-import page.subscriptionPage;
-import page.writingPage;
-import page.featurePage;
-import org.testng.annotations.BeforeSuite;
-import org.testng.annotations.Test;
+import org.openqa.selenium.OutputType;
+import org.testng.annotations.*;
+import io.qameta.allure.*;
+import org.testng.ITestResult;
 
-public class checkItemsInAccountPage {
+@Listeners(io.qameta.allure.testng.AllureTestNg.class)
+public class CheckItemsInAccountPage {
 
+    //Run before Test
     @BeforeSuite
-    private void loginToPage() {
-        readENV.loadProperties("STG");
-        loginGrammarly.executeLoginTest();
-        accountPage ap = new accountPage();
-        ap.action();
+    private void setUp() {
+        ReadEnv.loadProperties("STG");
+        LoginGrammarly.executeLoginTest();
+        AccountPage accountpage = new AccountPage();
+        accountpage.action();
     }
 
     @Test
-    public static void checkProfilePage() {
+    @Description("Verify elements on the Profile Page")
+    @Severity(SeverityLevel.CRITICAL)
+    public void checkProfilePage() {
+        executeTest(() -> {
+            ProfilePage profilePage = new ProfilePage();
+            verifyProfileHeader(profilePage);
+            verifyAccountName(profilePage);
+            verifyAccountEmail(profilePage);
+        });
+    }
+
+    @Step("Verify profile header")
+    private void verifyProfileHeader(ProfilePage profilePage) {
+        Assert.assertTrue(profilePage.checkProfileHeader(), "Profile header is incorrect.");
+    }
+
+    @Step("Verify account name")
+    private void verifyAccountName(ProfilePage profilePage) {
+        Assert.assertTrue(profilePage.checkAccountName(), "Account name is incorrect.");
+    }
+
+    @Step("Verify account email")
+    private void verifyAccountEmail(ProfilePage profilePage) {
+        Assert.assertTrue(profilePage.checkAccountEmail(), "Account email is incorrect.");
+    }
+
+    @Test
+    @Description("Verify elements on the Subscription Page")
+    @Severity(SeverityLevel.CRITICAL)
+    public void checkSubscriptionPage() {
+        executeTest(() -> {
+            SubscriptionPage subscriptionPage = new SubscriptionPage();
+            subscriptionPage.openSubPage();
+            verifySubscriptionHeader(subscriptionPage);
+            verifySubscriptionDetails(subscriptionPage);
+        });
+    }
+
+    @Step("Verify Subscription header")
+    private void verifySubscriptionHeader(SubscriptionPage subscriptionPage) {
+        Assert.assertTrue(subscriptionPage.checkSubscriptionHeader(), "Subscription header is incorrect.");
+    }
+
+    @Step("Verify Subscription details")
+    private void verifySubscriptionDetails(SubscriptionPage subscriptionPage) {
+        Assert.assertTrue(subscriptionPage.checkSubscriptionDetail(), "Subscription details are incorrect.");
+    }
+
+    @Test
+    @Description("Verify elements on the Writing Page")
+    @Severity(SeverityLevel.CRITICAL)
+    public void checkWritingPage() {
+        executeTest(() -> {
+            WritingPage writingPage = new WritingPage();
+            writingPage.openWritingPage();
+            verifyWritingHeader(writingPage);
+            verifyWritingDetails(writingPage);
+        });
+    }
+
+    @Step("Verify Writing header")
+    private void verifyWritingHeader(WritingPage writingPage) {
+        Assert.assertTrue(writingPage.checkWritingHeader(), "Writing page header is incorrect.");
+    }
+
+    @Step("Verify Writing details")
+    private void verifyWritingDetails(WritingPage writingPage) {
+        Assert.assertTrue(writingPage.checkWritingDetail(), "Writing page details are incorrect.");
+    }
+
+    @Test
+    @Description("Verify elements on the Feature Page")
+    @Severity(SeverityLevel.CRITICAL)
+    public void checkFeaturePage() {
+        executeTest(() -> {
+            FeaturePage featurePage = new FeaturePage();
+            featurePage.openFeaturePage();
+            verifyFeatureHeader(featurePage);
+            verifyFeatureDetails(featurePage);
+        });
+    }
+
+    @Step("Verify Writing header")
+    private void verifyFeatureHeader(FeaturePage featurePage) {
+        Assert.assertTrue(featurePage.checkFeatureHeader(), "Feature page header is incorrect.");
+    }
+
+    @Step("Verify Writing details")
+    private void verifyFeatureDetails(FeaturePage featurePage) {
+        Assert.assertTrue(featurePage.checkFeatureDetail(), "Feature page details are incorrect.");
+    }
+
+    // Remove the try catch
+    private void executeTest(Runnable testCode) {
         try {
-            profilePage pP = new profilePage();
-            Assert.assertTrue(pP.checkProfileHeader());
-            Assert.assertTrue(pP.checkAccountName());
-            Assert.assertTrue(pP.checkAccountEmail());
+            testCode.run();
         } catch (Exception e) {
             e.printStackTrace();
+            Assert.fail("An exception occurred during the test: " + e.getMessage());
         } finally {
             BasePage.tearDownDriver();
         }
     }
 
-    @Test
-    public static void checkSubscriptionPage() {
-        try {
-            subscriptionPage sP = new subscriptionPage();
-            sP.openSubPage();
-            Assert.assertTrue(sP.checkSubscriptionHeader());
-            Assert.assertTrue(sP.checkSubscriptionDetail());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            BasePage.tearDownDriver();
-        }
+    @Attachment(value = "Screenshot on failure", type = "image/png")
+    public byte[] captureScreenshot() {
+        return ((TakesScreenshot) BasePage.getDriver()).getScreenshotAs(OutputType.BYTES);
     }
 
-    @Test
-    public static void checkWritingPage() {
-        try {
-            writingPage wP = new writingPage();
-            wP.openWritingPage();
-            Assert.assertTrue(wP.checkWritingHeader());
-            Assert.assertTrue(wP.checkWritingDetail());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            BasePage.tearDownDriver();
+    @AfterMethod
+    public void tearDown(ITestResult result) {
+        if (ITestResult.FAILURE == result.getStatus()) {
+            captureScreenshot();
         }
-    }
-
-    @Test
-    public static void checkFeaturePage() {
-        try {
-            featurePage setP = new featurePage();
-            setP.openFeaturePage();
-            Assert.assertTrue(setP.checkFeatureHeader());
-            Assert.assertTrue(setP.checkFeatureDetail());
-        } catch (Exception e) {
-            e.printStackTrace();
-        } finally {
-            BasePage.tearDownDriver();
-        }
+        BasePage.tearDownDriver();
     }
 }

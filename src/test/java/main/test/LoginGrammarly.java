@@ -1,24 +1,25 @@
 package main.test;
 
 import base.BasePage;
-import base.readENV;
+import base.ReadEnv;
 import org.testng.annotations.BeforeSuite;
 import org.testng.annotations.Test;
-import page.loginPage;
+import page.LoginPage;
 
-public class loginGrammarly {
+public class LoginGrammarly {
 
+    //Run before Test
     @BeforeSuite
     private void LoadEnv() {
-        readENV.loadProperties("STG");
+        ReadEnv.loadProperties("STG");
     }
     @Test
     public static void executeLoginTest() {
         BasePage.initializeDriver();
         try {
-            loginPage lP = new loginPage();
+            LoginPage loginpage = new LoginPage();
 
-            lP.login();
+            loginpage.login();
 
             System.out.println("Login executed successfully!");
 
