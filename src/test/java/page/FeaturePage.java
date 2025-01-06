@@ -1,11 +1,11 @@
 package page;
 
 import base.BasePage;
-import base.readENV;
+import base.ReadEnv;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class featurePage extends BasePage {
+public class FeaturePage extends BasePage {
     private final By SettingsP = By.xpath("//span[text()='Settings']");
 
     private final By FeatureDr = By.xpath("//a[text()='Feature customization']");
@@ -19,15 +19,14 @@ public class featurePage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(FeatureDr)).click();
     }
     public boolean checkFeatureHeader () {
-        String featureH = readENV.get("featureHeader");
+        String featureH = ReadEnv.get("featureHeader");
         String webFeatureH = wait.until(ExpectedConditions.visibilityOfElementLocated(FeatureH)).getText();
         return featureH == webFeatureH;
     }
 
     public boolean checkFeatureDetail() {
-        String featureD = readENV.get("featureDetail");
+        String featureD = ReadEnv.get("featureDetail");
         String webFeatureD = wait.until(ExpectedConditions.visibilityOfElementLocated(FeatureD)).getText();
         return featureD == webFeatureD;
     }
-
 }

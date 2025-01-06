@@ -1,11 +1,11 @@
 package page;
 
 import base.BasePage;
-import base.readENV;
+import base.ReadEnv;
 import org.openqa.selenium.By;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 
-public class writingPage extends BasePage {
+public class WritingPage extends BasePage {
     private final By WritingP = By.xpath("//span[text()='Writing']");
 
     private final By WritingDr = By.xpath("//a[text()='Your dictionary']");
@@ -20,14 +20,14 @@ public class writingPage extends BasePage {
         wait.until(ExpectedConditions.elementToBeClickable(WritingDr)).click();
     }
     public boolean checkWritingHeader () {
-        String writingH = readENV.get("dictionaryHeader");
+        String writingH = ReadEnv.get("dictionaryHeader");
         String webWritingH = wait.until(ExpectedConditions.visibilityOfElementLocated(WritingH)).getText();
         return writingH == webWritingH;
     }
 
     public boolean checkWritingDetail() {
-        String writingD1 = readENV.get("dictionaryDetail1");
-        String writingD2 = readENV.get("dictionaryDetail2");
+        String writingD1 = ReadEnv.get("dictionaryDetail1");
+        String writingD2 = ReadEnv.get("dictionaryDetail2");
         String webWritingD1 = wait.until(ExpectedConditions.visibilityOfElementLocated(WritingD1)).getText();
         String webWritingD2 = wait.until(ExpectedConditions.visibilityOfElementLocated(WritingD2)).getText();
 
